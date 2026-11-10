@@ -1,0 +1,888 @@
+/* ==========================================================
+   RESPONSIVE LAYER — portfolio-specific overrides only
+   Keep this file AFTER style.css and section-stack.css.
+   Desktop styling is intentionally left untouched.
+   ========================================================== */
+
+/* Baseline safety for flexible layouts and media */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    max-width: 100%;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+body {
+    min-width: 0;
+    max-width: 100%;
+}
+
+img,
+video,
+canvas,
+iframe,
+svg {
+    max-width: 100%;
+}
+
+img,
+video {
+    height: auto;
+}
+
+main,
+section,
+article,
+aside,
+header,
+footer,
+.container,
+.nav,
+.hero-content,
+.hero-visual,
+.about-layout,
+.about-copy,
+.about-tech-art,
+.academic-item,
+.academic-card,
+.experience-card,
+.constellation-layout,
+.constellation-panel,
+.skill-detail-panel,
+.projects-grid,
+.project-card,
+.contact-layout,
+.contact-card,
+.footer-inner {
+    min-width: 0;
+}
+
+p,
+li,
+a,
+button,
+summary,
+label,
+small,
+strong,
+span,
+h1,
+h2,
+h3,
+h4 {
+    overflow-wrap: anywhere;
+}
+
+input,
+textarea,
+select,
+button {
+    max-width: 100%;
+    font: inherit;
+}
+
+input,
+textarea,
+select {
+    min-width: 0;
+}
+
+textarea {
+    resize: vertical;
+}
+
+/* Wide tablets / compact laptops */
+@media (max-width: 1050px) {
+    .nav {
+        gap: 16px;
+    }
+
+    .nav-links {
+        gap: clamp(10px, 1.5vw, 18px);
+    }
+
+    .hero {
+        grid-template-columns: minmax(0, 1fr) minmax(0, .85fr);
+        gap: clamp(22px, 3vw, 36px);
+    }
+
+    .about-layout,
+    .constellation-layout,
+    .contact-layout {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        gap: clamp(22px, 3vw, 36px);
+    }
+
+    .project-card {
+        padding: clamp(20px, 2.5vw, 30px);
+    }
+}
+
+/* Tablet and below */
+@media (max-width: 850px) {
+    .nav {
+        flex-wrap: wrap;
+        padding-block: 16px;
+    }
+
+    .nav-links {
+        order: 3;
+        width: 100%;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        row-gap: 10px;
+    }
+
+    .nav-actions {
+        max-width: 100%;
+        flex-wrap: wrap;
+    }
+
+    .hero {
+        min-height: auto;
+        grid-template-columns: minmax(0, 1fr);
+        padding-top: clamp(48px, 8vw, 76px);
+        padding-bottom: clamp(72px, 10vw, 110px);
+    }
+
+    .hero-content {
+        width: 100%;
+    }
+
+    .hero-visual {
+        width: min(100%, 460px);
+        justify-self: center;
+        margin-inline: auto;
+    }
+
+    .about-layout,
+    .constellation-layout,
+    .contact-layout {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .about-tech-art {
+        width: 100%;
+        max-width: 560px;
+        margin-inline: auto;
+    }
+
+    .academic-heading-row,
+    .experience-heading {
+        align-items: flex-start;
+    }
+
+    .academic-heading-row > *,
+    .experience-heading > * {
+        min-width: 0;
+    }
+
+    .skill-constellation {
+        max-width: 100%;
+    }
+
+    .skill-detail-panel {
+        width: 100%;
+    }
+
+    .contact-form,
+    .contact-info,
+    .contact-card {
+        min-width: 0;
+        width: 100%;
+    }
+}
+
+/* Phones */
+@media (max-width: 600px) {
+    .container {
+        width: calc(100% - 32px);
+    }
+
+    .site-header .nav {
+        min-height: 0;
+        align-items: center;
+        column-gap: 12px;
+        row-gap: 12px;
+        padding-block: 14px;
+    }
+
+    .brand {
+        font-size: 1.55rem;
+    }
+
+    .nav-links {
+        gap: 8px 16px;
+        font-size: .9rem;
+    }
+
+    .nav-links a,
+    .nav-cta {
+        max-width: 100%;
+    }
+
+    .nav-actions {
+        gap: 6px;
+    }
+
+    .nav-actions .environment-switch {
+        max-width: 100%;
+        white-space: normal;
+    }
+
+    .hero {
+        gap: 30px;
+        padding-top: 42px;
+        padding-bottom: 72px;
+    }
+
+    .hero-eyebrow {
+        margin-top: 22px;
+        font-size: .9rem;
+    }
+
+    .hero-title {
+        font-size: clamp(2.45rem, 11.5vw, 4rem);
+        line-height: 1.06;
+        letter-spacing: -.06em;
+    }
+
+    .hero-description {
+        margin-top: 20px;
+        font-size: .98rem;
+        line-height: 1.75;
+    }
+
+    .hero-actions {
+        gap: 10px;
+    }
+
+    .hero-actions .btn {
+        max-width: 100%;
+        justify-content: center;
+    }
+
+    .hero-meta {
+        gap: 9px;
+        line-height: 1.6;
+    }
+
+    .hero-visual {
+        width: min(100%, 390px);
+    }
+
+    .floating-card {
+        max-width: 46%;
+        overflow-wrap: anywhere;
+    }
+
+    .section {
+        padding-block: clamp(54px, 12vw, 76px);
+        scroll-margin-top: 16px;
+    }
+
+    .section-label {
+        font-size: .68rem;
+        letter-spacing: .12em;
+        overflow-wrap: anywhere;
+    }
+
+    .section-title {
+        font-size: clamp(1.9rem, 8.5vw, 3rem);
+        line-height: 1.12;
+        letter-spacing: -.04em;
+    }
+
+    .about-intro,
+    .section-description,
+    .projects-intro {
+        font-size: .96rem;
+        line-height: 1.75;
+    }
+
+    .about-tech-art {
+        min-height: 0;
+        overflow: hidden;
+    }
+
+    .tech-art-canvas {
+        max-width: 100%;
+    }
+
+    .tech-note {
+        max-width: 42%;
+    }
+
+    .tech-core-title {
+        font-size: clamp(1.15rem, 5.2vw, 1.8rem);
+    }
+
+    .academic-timeline {
+        max-width: 100%;
+    }
+
+    .academic-item {
+        gap: 12px;
+    }
+
+    .academic-card {
+        padding: clamp(16px, 4vw, 24px);
+    }
+
+    .academic-topline {
+        flex-wrap: wrap;
+        gap: 8px 12px;
+    }
+
+    .academic-period {
+        max-width: 100%;
+        font-size: .7rem;
+    }
+
+    .academic-heading-row {
+        gap: 12px;
+    }
+
+    .academic-heading-row h3,
+    .academic-heading-row h4 {
+        min-width: 0;
+        font-size: clamp(1.05rem, 4.8vw, 1.4rem);
+    }
+
+    .academic-details,
+    .academic-detail-block {
+        min-width: 0;
+    }
+
+    .academic-tags,
+    .experience-tags,
+    .project-tags,
+    .skill-detail-tags {
+        gap: 7px;
+    }
+
+    .academic-tags span,
+    .experience-tags span,
+    .project-tags span,
+    .skill-detail-tags span {
+        max-width: 100%;
+        overflow-wrap: anywhere;
+    }
+
+    .experience-card {
+        padding: clamp(18px, 4.5vw, 26px);
+    }
+
+    .experience-topline {
+        flex-wrap: wrap;
+        gap: 8px 12px;
+    }
+
+    .experience-heading {
+        gap: 12px;
+    }
+
+    .experience-mark {
+        flex: 0 0 auto;
+    }
+
+    .constellation-panel {
+        padding: clamp(12px, 3.5vw, 20px);
+    }
+
+    .constellation-toolbar {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .skill-constellation {
+        width: 100%;
+        overflow: hidden;
+    }
+
+    .constellation-node {
+        max-width: 40%;
+        min-width: 0;
+        padding: 8px 10px;
+        overflow-wrap: anywhere;
+    }
+
+    .node-name {
+        font-size: clamp(.72rem, 3.2vw, .9rem);
+    }
+
+    .node-caption {
+        font-size: clamp(.52rem, 2.4vw, .65rem);
+        letter-spacing: .06em;
+    }
+
+    .skill-connections {
+        min-width: 0;
+    }
+
+    .connection-items {
+        flex-wrap: wrap;
+    }
+
+    .skill-detail-panel {
+        padding: clamp(18px, 4.5vw, 26px);
+    }
+
+    .projects-grid {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 16px;
+    }
+
+    .project-card {
+        padding: clamp(18px, 4.5vw, 26px);
+    }
+
+    .project-top {
+        flex-wrap: wrap;
+        align-items: flex-start;
+        gap: 8px 12px;
+        margin-bottom: 18px;
+    }
+
+    .project-category {
+        text-align: left;
+    }
+
+    .project-card > p,
+    .project-description {
+        font-size: .92rem;
+        line-height: 1.75;
+    }
+
+    .project-details summary,
+    .project-link {
+        line-height: 1.6;
+    }
+
+    .contact-card,
+    .contact-form,
+    .contact-info {
+        padding: clamp(16px, 4vw, 24px);
+    }
+
+    .contact-option {
+        min-width: 0;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .contact-option > * {
+        min-width: 0;
+        overflow-wrap: anywhere;
+    }
+
+    .contact-bottom {
+        flex-wrap: wrap;
+        gap: 10px 16px;
+        line-height: 1.6;
+    }
+
+    .footer-inner {
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 12px 20px;
+        padding-block: 22px;
+    }
+
+    .footer-inner p {
+        max-width: 100%;
+        font-size: .85rem;
+    }
+
+    /* Full-screen section-stack mode needs its own compact spacing. */
+    body.section-stack-active main > section.stack-slide {
+        padding: 82px 16px 26px !important;
+    }
+}
+
+/* Small phones */
+@media (max-width: 420px) {
+    .container {
+        width: calc(100% - 28px);
+    }
+
+    .nav-links {
+        column-gap: 12px;
+        row-gap: 8px;
+    }
+
+    .hero-title {
+        font-size: clamp(2.2rem, 11vw, 2.9rem);
+    }
+
+    .hero-actions {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .hero-actions .btn {
+        width: 100%;
+    }
+
+    .hero-meta {
+        font-size: .7rem;
+    }
+
+    .floating-card {
+        padding: 10px;
+        font-size: .75rem;
+    }
+
+    .academic-summary {
+        min-width: 0;
+    }
+
+    .academic-toggle {
+        flex-shrink: 0;
+    }
+
+    .experience-heading {
+        flex-wrap: wrap;
+    }
+
+    .contact-bottom > * {
+        max-width: 100%;
+    }
+}
+
+/* Respect users who ask for less motion. */
+@media (prefers-reduced-motion: reduce) {
+    html:focus-within {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+    }
+}
+
+
+/* ==========================================================
+   FOLLOW-UP POLISH — experience heading, navigation, scrolling
+   Append-only overrides; original design tokens are preserved.
+   ========================================================== */
+
+/* Native anchor navigation should glide instead of jumping. */
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 24px;
+}
+
+/* Give anchored sections a little breathing room after navigation. */
+main section[id] {
+    scroll-margin-top: 24px;
+}
+
+/* The outlined word "experiences." needs its own spacing:
+   the hero title's strong negative tracking was causing letters
+   to crowd into one another. */
+.hero-title {
+    line-height: 1.12;
+}
+
+.hero-title {
+    max-width: 700px;
+    margin-top: 16px;
+    font-size: clamp(3rem, 5.8vw, 5.6rem);
+    font-weight: 600;
+    line-height: 1.04;
+    letter-spacing: normal;
+    overflow-wrap: normal;
+    word-break: normal;
+}
+
+.title-accent {
+    color: var(--color-olive);
+}
+
+.title-outline {
+    display: block;
+    color: transparent;
+    -webkit-text-stroke: 1.4px var(--color-charcoal);
+    letter-spacing: normal;
+    overflow-wrap: normal;
+    -webkit-font-smoothing: antialiased;
+    paint-order: stroke fill;
+    word-break: normal;
+}
+
+/* Keep navigation links readable and prevent cramped overlap. */
+.nav {
+    flex-wrap: wrap;
+    row-gap: 12px;
+    padding-block: 12px;
+}
+
+.nav-links {
+    flex: 1 1 auto;
+    min-width: 0;
+    flex-wrap: wrap;
+    column-gap: clamp(10px, 1.45vw, 22px);
+    row-gap: 10px;
+}
+
+.nav-links a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 36px;
+    white-space: nowrap;
+    line-height: 1.3;
+}
+
+/* At medium widths, let navigation take its own full row. */
+@media (min-width: 641px) and (max-width: 1100px) {
+    .nav {
+        justify-content: space-between;
+    }
+
+    .nav-links {
+        order: 3;
+        flex-basis: 100%;
+        justify-content: center;
+        padding-top: 4px;
+    }
+
+    .nav-cta {
+        margin-left: auto;
+    }
+}
+
+/* Compact screens: links wrap cleanly instead of colliding. */
+@media (max-width: 640px) {
+    html {
+        scroll-padding-top: 16px;
+    }
+
+    main section[id] {
+        scroll-margin-top: 16px;
+    }
+
+    .nav {
+        align-items: center;
+        column-gap: 12px;
+        row-gap: 10px;
+    }
+
+    .nav-links {
+        justify-content: flex-start;
+        column-gap: 14px;
+        row-gap: 4px;
+    }
+
+    .nav-links a {
+        min-height: 34px;
+        font-size: 0.82rem;
+    }
+
+    .nav-cta {
+        max-width: 100%;
+        white-space: nowrap;
+        font-size: 0.82rem;
+    }
+
+    .hero-title {
+        line-height: 1.1;
+        letter-spacing: -0.055em;
+    }
+
+    .hero-title {
+    max-width: 700px;
+    margin-top: 16px;
+    font-size: clamp(3rem, 5.8vw, 5.6rem);
+    font-weight: 600;
+    line-height: 1.04;
+    letter-spacing: normal;
+    overflow-wrap: normal;
+    word-break: normal;
+}
+
+.title-accent {
+    color: var(--color-olive);
+}
+
+.title-outline {
+    display: block;
+    color: transparent;
+    -webkit-text-stroke: 1.4px var(--color-charcoal);
+    letter-spacing: normal;
+    overflow-wrap: normal;
+    word-break: normal;
+    -webkit-font-smoothing: antialiased;
+    paint-order: stroke fill;
+}
+}
+
+/* Respect the operating system's reduced-motion preference. */
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+/* ===== MOBILE NAVBAR: ACTUAL LAYOUT REDESIGN ===== */
+
+@media (max-width: 640px) {
+    .site-header {
+        position: sticky !important;
+        top: 0;
+        z-index: 1000;
+        background: var(--color-ivory, #f8f7f0);
+        border-bottom: 1px solid var(--color-border, #dedbd1);
+    }
+
+    .site-header .nav {
+        display: grid !important;
+        grid-template-columns: 1fr auto !important;
+        align-items: center !important;
+        gap: 0 12px !important;
+        min-height: 0 !important;
+        padding: 13px 0 0 !important;
+    }
+
+    .site-header .brand {
+        grid-column: 1;
+        grid-row: 1;
+        font-size: 1.65rem !important;
+        line-height: 1 !important;
+        letter-spacing: -0.07em;
+    }
+
+    .site-header .nav-cta {
+        grid-column: 2;
+        grid-row: 1;
+        justify-self: end;
+        font-size: 0.76rem !important;
+        padding: 9px 11px;
+        white-space: nowrap;
+        border: 1px solid var(--color-border);
+        border-radius: 6px;
+    }
+
+    /* Separate, single-line navigation rail */
+    .site-header .nav-links {
+        grid-column: 1 / -1;
+        grid-row: 2;
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        justify-content: flex-start !important;
+        align-items: stretch !important;
+        gap: 25px !important;
+
+        width: calc(100% + 12vw) !important;
+        margin: 12px -6vw 0 !important;
+        padding: 0 6vw !important;
+
+        overflow-x: auto !important;
+        overflow-y: hidden !important;
+        white-space: nowrap;
+        scrollbar-width: none;
+        -webkit-overflow-scrolling: touch;
+        overscroll-behavior-x: contain;
+        border-top: 1px solid var(--color-border);
+    }
+
+    .site-header .nav-links::-webkit-scrollbar {
+        display: none;
+    }
+
+    .site-header .nav-links a {
+        position: relative;
+        display: inline-flex !important;
+        align-items: center;
+        flex: 0 0 auto !important;
+        min-height: 44px;
+        padding: 0 0 2px !important;
+        font-size: 0.8rem !important;
+        line-height: 1.2;
+        white-space: nowrap;
+        color: var(--color-muted);
+        text-decoration: none;
+    }
+
+    .site-header .nav-links a:hover,
+    .site-header .nav-links a:focus-visible {
+        color: var(--color-olive);
+    }
+
+    .site-header .nav-links a::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 0;
+        height: 2px;
+        background: var(--color-olive);
+        transition: width 180ms ease;
+    }
+
+    .site-header .nav-links a:hover::after,
+    .site-header .nav-links a:focus-visible::after {
+        width: 100%;
+    }
+}
+
+/* Extra-small phones */
+@media (max-width: 360px) {
+    .site-header .nav {
+        column-gap: 8px !important;
+    }
+
+    .site-header .brand {
+        font-size: 1.45rem !important;
+    }
+
+    .site-header .nav-cta {
+        font-size: 0.69rem !important;
+        padding: 8px !important;
+    }
+
+    .site-header .nav-links {
+        gap: 20px !important;
+    }
+
+    .site-header .nav-links a {
+        font-size: 0.76rem !important;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .site-header .nav-links a::after {
+        transition: none;
+    }
+}
+
+
+
+/* Mobile outlined heading — preserve existing typography */
+@media screen and (max-width: 600px) {
+    .hero-title .title-outline {
+        color: transparent !important;
+        -webkit-text-fill-color: transparent !important;
+        -webkit-text-stroke: 1.4px var(--color-charcoal) !important;
+        text-shadow: none !important;
+        filter: none !important;
+    }
+}

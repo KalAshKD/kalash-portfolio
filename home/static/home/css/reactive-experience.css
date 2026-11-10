@@ -1,0 +1,656 @@
+/* Task 1: subtle cursor-reactive particle layer. Isolated from the portfolio's existing styles. */
+#reactive-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  pointer-events: none;
+  opacity: 0.58;
+  mix-blend-mode: multiply;
+}
+
+/* A tiny scroll-progress accent; it does not change or intercept scrolling. */
+#reactive-scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  z-index: 9999;
+  pointer-events: none;
+  transform: scaleX(var(--reactive-scroll, 0));
+  transform-origin: left center;
+  background: #737c59;
+  opacity: 0.75;
+}
+
+@media (max-width: 700px) {
+  #reactive-canvas { opacity: 0.35; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #reactive-canvas { display: none; }
+  #reactive-scroll-progress { opacity: 0.4; }
+}
+
+
+
+
+/* =====================================
+   INTERACTIVE TEXT HOVER EFFECTS
+   ===================================== */
+
+/* Selected text elements only */
+.reactive-text {
+  transition:
+    color 220ms ease,
+    text-shadow 220ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .reactive-text:hover {
+    color: #515A3D;
+    text-shadow: 0 2px 14px rgba(115, 124, 89, 0.14);
+  }
+
+  /* Subtle lift for headings */
+  .reactive-lift {
+    display: inline-block;
+    transition:
+      transform 260ms cubic-bezier(0.2, 0.7, 0.3, 1);
+  }
+
+  .reactive-lift:hover {
+    transform: translateY(-3px);
+  }
+
+  /* Underline reveal */
+  .reactive-underline {
+    position: relative;
+    display: inline-block;
+    text-decoration: none;
+  }
+
+  .reactive-underline::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+    width: 100%;
+    height: 1.5px;
+    background: #737C59;
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 280ms ease;
+  }
+
+  .reactive-underline:hover::after {
+    transform: scaleX(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reactive-text,
+  .reactive-lift,
+  .reactive-underline::after {
+    transition: none !important;
+  }
+
+  .reactive-lift:hover {
+    transform: none !important;
+  }
+}
+
+/* =====================================
+   CUSTOM CURSOR FEEDBACK
+   Ivory + Olive theme
+   ===================================== */
+
+#reactive-cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 34px;
+  height: 34px;
+  border: 1px solid rgba(115, 124, 89, 0.65);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99999;
+  opacity: 0;
+  transform: translate3d(-100px, -100px, 0);
+  transition:
+    width 220ms ease,
+    height 220ms ease,
+    border-color 220ms ease,
+    background-color 220ms ease,
+    opacity 180ms ease;
+  will-change: transform;
+}
+
+#reactive-cursor-ring.is-visible {
+  opacity: 1;
+}
+
+#reactive-cursor-ring.is-interactive {
+  width: 48px;
+  height: 48px;
+  border-color: rgba(81, 90, 61, 0.9);
+  background: rgba(115, 124, 89, 0.09);
+}
+
+#reactive-cursor-ring.is-link {
+  width: 42px;
+  height: 42px;
+  background: rgba(115, 124, 89, 0.14);
+}
+
+/* Don't run this effect on touchscreens or reduced-motion setups. */
+@media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) {
+  #reactive-cursor-ring {
+    display: none !important;
+  }
+}
+
+/* =====================================
+   CALM / PLAY MODE TOGGLE
+   ===================================== */
+
+#reactive-mode-toggle {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  z-index: 100000;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px;
+  border: 1px solid rgba(115, 124, 89, 0.3);
+  border-radius: 999px;
+  background: rgba(255, 254, 250, 0.94);
+  box-shadow: 0 5px 22px rgba(37, 40, 33, 0.09);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  font: inherit;
+}
+
+#reactive-mode-toggle button {
+  border: 0;
+  border-radius: 999px;
+  padding: 9px 13px;
+  background: transparent;
+  color: #515A3D;
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+  transition:
+    background 200ms ease,
+    color 200ms ease,
+    transform 200ms ease;
+}
+
+#reactive-mode-toggle button[aria-pressed="true"] {
+  background: #737C59;
+  color: #FFFEFA;
+}
+
+#reactive-mode-toggle button:focus-visible {
+  outline: 2px solid #515A3D;
+  outline-offset: 3px;
+}
+
+#reactive-mode-toggle button:hover {
+  transform: translateY(-1px);
+}
+
+/* Calm mode: quieter particle visuals */
+html.calm-mode #reactive-canvas {
+  opacity: 0.48;
+  transition: opacity 250ms ease;
+}
+
+html.calm-mode #reactive-cursor-ring {
+  opacity: 0.45;
+}
+
+/* Play mode: more expressive visuals */
+html.play-mode #reactive-canvas {
+  opacity: 1;
+  transition: opacity 250ms ease;
+}
+
+html.play-mode #reactive-cursor-ring {
+  border-color: rgba(81, 90, 61, 0.95);
+}
+
+@media (max-width: 600px) {
+  #reactive-mode-toggle {
+    right: 12px;
+    bottom: 12px;
+    gap: 2px;
+  }
+
+  #reactive-mode-toggle button {
+    padding: 8px 10px;
+    font-size: 11px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #reactive-mode-toggle button,
+  #reactive-canvas,
+  #reactive-cursor-ring {
+    transition: none !important;
+  }
+}
+
+/* Keep the particle canvas subtle and non-interactive */
+#reactive-canvas {
+  pointer-events: none !important;
+  opacity: 0.55;
+}
+
+/* Keep the actual page content visually clear */
+#reactive-mode-toggle {
+  pointer-events: auto;
+}
+
+/* Make particle visuals quieter on smaller screens */
+@media (max-width: 700px) {
+  #reactive-canvas {
+    opacity: 0.32;
+  }
+}
+
+/* =====================================
+   SCROLL-REACTIVE SECTION REVEAL
+   ===================================== */
+
+[data-reactive-reveal] {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 650ms ease,
+    transform 650ms cubic-bezier(0.2, 0.7, 0.3, 1);
+}
+
+[data-reactive-reveal].reactive-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Accessible fallback */
+@media (prefers-reduced-motion: reduce) {
+  [data-reactive-reveal],
+  [data-reactive-reveal].reactive-revealed {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* =====================================
+   STAGGERED CONTENT REVEAL
+   ===================================== */
+
+.reactive-stagger-item {
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 480ms ease,
+    transform 480ms cubic-bezier(0.2, 0.7, 0.3, 1);
+}
+
+/* Reveal items in a sequence */
+.reactive-stagger-item.reactive-stagger-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Small delay between consecutive items */
+.reactive-stagger-item:nth-child(1) {
+  transition-delay: 0ms;
+}
+
+.reactive-stagger-item:nth-child(2) {
+  transition-delay: 90ms;
+}
+
+.reactive-stagger-item:nth-child(3) {
+  transition-delay: 180ms;
+}
+
+.reactive-stagger-item:nth-child(4) {
+  transition-delay: 270ms;
+}
+
+.reactive-stagger-item:nth-child(5) {
+  transition-delay: 360ms;
+}
+
+.reactive-stagger-item:nth-child(n + 6) {
+  transition-delay: 420ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reactive-stagger-item,
+  .reactive-stagger-item.reactive-stagger-visible {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+
+
+
+
+
+
+
+
+/* =========================================
+   STEP 7: PREMIUM CARD DEPTH
+========================================= */
+
+[data-reactive-depth] {
+  position: relative;
+  transition:
+    transform 350ms cubic-bezier(0.2, 0.7, 0.3, 1),
+    box-shadow 350ms ease,
+    border-color 350ms ease;
+  transform: translateY(0);
+  will-change: transform;
+}
+
+/* Mouse / trackpad devices only */
+@media (hover: hover) and (pointer: fine) {
+  [data-reactive-depth]:hover {
+    transform: translateY(-6px);
+    box-shadow:
+      0 14px 32px rgba(54, 65, 39, 0.12),
+      0 3px 8px rgba(54, 65, 39, 0.06);
+  }
+}
+
+/* Keyboard accessibility */
+[data-reactive-depth]:focus-within {
+  border-color: rgba(104, 120, 75, 0.45);
+}
+
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  [data-reactive-depth] {
+    transition: none;
+    transform: none;
+    will-change: auto;
+  }
+
+  [data-reactive-depth]:hover {
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+/* STEP 8: SOFT CURSOR SPOTLIGHT */
+
+[data-reactive-depth] {
+  overflow: hidden;
+  isolation: isolate;
+}
+
+[data-reactive-depth]::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+
+  opacity: 0;
+
+  background: radial-gradient(
+    260px circle at var(--spot-x, 50%) var(--spot-y, 50%),
+    rgba(151, 139, 83, 0.28) 0%,
+    rgba(185, 172, 119, 0.16) 35%,
+    rgba(220, 211, 177, 0.08) 58%,
+    transparent 75%
+  );
+
+  transition: opacity 220ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  [data-reactive-depth]:hover::before {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reactive-depth]::before {
+    transition: none;
+  }
+}
+
+
+
+
+/* STEP 9: POLISHED SECTION REVEAL */
+
+[data-reactive-reveal] {
+  transition:
+    opacity 700ms ease,
+    transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+[data-reactive-reveal].reactive-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reactive-reveal],
+  [data-reactive-reveal].reactive-revealed {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* STEP 11: ANIMATED SKILL BARS */
+
+[data-reactive-skill] {
+  width: 100%;
+}
+
+[data-reactive-skill] .skill-bar-fill {
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 1000ms cubic-bezier(0.2, 0.7, 0.3, 1);
+}
+
+[data-reactive-skill].skill-visible .skill-bar-fill {
+  transform: scaleX(var(--skill-level, 1));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reactive-skill] .skill-bar-fill {
+    transition: none;
+    transform: scaleX(var(--skill-level, 1));
+  }
+}
+
+/* STEP 11: INTERACTIVE CONSTELLATION NODES */
+
+#skills .constellation-node {
+    transition:
+        background 220ms ease,
+        color 220ms ease,
+        border-color 220ms ease,
+        box-shadow 260ms ease,
+        opacity 220ms ease,
+        filter 260ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    #skills .constellation-node:hover {
+        filter: brightness(1.04);
+        box-shadow:
+            0 0 0 4px rgba(115, 124, 89, 0.13),
+            0 8px 22px rgba(81, 90, 61, 0.12);
+    }
+
+    #skills .constellation-node.is-active:hover {
+        box-shadow:
+            0 0 0 7px rgba(115, 124, 89, 0.16),
+            0 8px 24px rgba(81, 90, 61, 0.18);
+    }
+}
+
+#skills .constellation-node:focus-visible {
+    outline: 2px solid #737C59;
+    outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #skills .constellation-node {
+        transition: none;
+    }
+}
+
+/* STEP 12: INTERACTIVE CONSTELLATION CONNECTIONS */
+
+#skills .constellation-lines line {
+    opacity: 0.24;
+    stroke: #737C59;
+    stroke-width: 1.4;
+    stroke-dasharray: 4 6;
+    transition:
+        opacity 300ms ease,
+        stroke-width 300ms ease,
+        stroke 300ms ease;
+}
+
+#skills .constellation-lines line.is-connected {
+    opacity: 1;
+    stroke: #737C59;
+    stroke-width: 2.6;
+    stroke-dasharray: 7 4;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #skills .constellation-lines line {
+        transition: none;
+    }
+}
+
+/* STEP 13 FIX: LINES ALWAYS BEHIND SKILL CIRCLES */
+
+#skills .skill-constellation {
+    position: relative;
+    isolation: isolate;
+}
+
+/* Layer 1: Every connecting line stays behind */
+#skills .skill-constellation > .constellation-lines {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0 !important;
+    pointer-events: none;
+}
+
+/* Layer 2: Every skill circle stays in front */
+#skills .skill-constellation > .constellation-node {
+    position: absolute;
+    z-index: 2 !important;
+}
+
+/* Selected circle stays above all other circles */
+#skills .skill-constellation > .constellation-node.is-active {
+    z-index: 3 !important;
+}
+
+/* STEP 14: KEEP CONNECTED SKILL NODES VISIBLE */
+
+/* Connected nodes should not become transparent */
+#skills .constellation-node.is-dimmed {
+    opacity: 1 !important;
+}
+
+/* Keep all circles above every connection line */
+#skills .skill-constellation > .constellation-node {
+    position: absolute;
+    z-index: 2 !important;
+}
+
+/* Connecting lines always remain behind the circles */
+#skills .skill-constellation > .constellation-lines {
+    position: absolute;
+    z-index: 0 !important;
+    pointer-events: none;
+}
+
+/* STEP 15: MAGNETIC CONSTELLATION SYNC */
+
+#skills .constellation-node {
+    will-change: transform;
+}
+
+#skills .constellation-lines line {
+    transition:
+        x1 120ms ease-out,
+        y1 120ms ease-out,
+        x2 120ms ease-out,
+        y2 120ms ease-out;
+}
+
+#skills .constellation-lines line {
+    transition: none;
+}
+
+#skills .constellation-lines {
+    pointer-events: none;
+}
+/* Resume button — positioned above Calm / Play */
+#reactive-resume-button {
+    position: fixed;
+    right: 24px;
+    bottom: 82px;
+    z-index: 10000;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 10px 18px;
+    border: 1px solid #DADCCD;
+    border-radius: 999px;
+
+    background: #FFFEFA;
+    color: #515A3D;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+
+    box-shadow: 0 4px 18px rgba(37, 40, 33, 0.08);
+    transition: background 200ms ease,
+                color 200ms ease,
+                transform 200ms ease;
+}
+
+#reactive-resume-button:hover {
+    background: #515A3D;
+    color: #FFFEFA;
+    transform: translateY(-2px);
+}
+
+@media (max-width: 600px) {
+    #reactive-resume-button {
+        right: 16px;
+        bottom: 78px;
+        padding: 9px 14px;
+        font-size: 12px;
+    }
+}

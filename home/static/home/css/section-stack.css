@@ -1,0 +1,78 @@
+
+/* ==========================================
+   SECTION STACK — OVERLAY TRANSITIONS
+   ========================================== */
+
+html {
+    scroll-behavior: auto !important;
+}
+
+body.section-stack-active {
+    overflow: hidden !important;
+}
+
+body.section-stack-active main {
+    position: relative;
+}
+
+/* Every main section becomes a slide */
+body.section-stack-active main > section.stack-slide {
+    position: fixed !important;
+    inset: 0 !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+    height: 100vh !important;
+    height: 100dvh !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 100px  max(24px, calc((100vw - 1200px) / 2)) 40px !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    overscroll-behavior: contain;
+    background: #F7F5EF;
+    -webkit-overflow-scrolling: touch;
+    will-change: transform;
+    transition: transform 750ms cubic-bezier(.22, 1, .36, 1);
+}
+
+/* The section currently visible */
+body.section-stack-active main > section.stack-slide.stack-current {
+    transform: translateY(0);
+    z-index: 2;
+    pointer-events: auto;
+}
+
+/* The next section waits below */
+body.section-stack-active main > section.stack-slide.stack-below {
+    transform: translateY(100%);
+    z-index: 3;
+    pointer-events: none;
+}
+
+/* The previous section moves above */
+body.section-stack-active main > section.stack-slide.stack-above {
+    transform: translateY(-100%);
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* Keep content readable */
+body.section-stack-active main > section.stack-slide > * {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Mobile */
+@media (max-width: 767px) {
+    body.section-stack-active main > section.stack-slide {
+        padding: 90px 18px 30px !important;
+    }
+}
+
+/* Respect accessibility preferences */
+@media (prefers-reduced-motion: reduce) {
+    body.section-stack-active main > section.stack-slide {
+        transition-duration: 150ms;
+    }
+}

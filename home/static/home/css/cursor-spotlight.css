@@ -1,0 +1,506 @@
+
+/* ========================================
+   CURSOR SPOTLIGHT — MIDNIGHT EMERALD
+   Original portfolio theme remains unchanged
+======================================== */
+
+:root {
+    --emerald-bg: #0B1410;
+    --emerald-surface: #14251B;
+    --emerald-accent: #244734;
+    --emerald-gold: #D5B879;
+    --emerald-text: #F2F0E8;
+}
+
+/* Alternate theme layer */
+.emerald-reveal {
+    position: fixed;
+    inset: 0;
+    z-index: 9990;
+    pointer-events: none;
+    overflow: hidden;
+
+    /* Circle position will be controlled by JavaScript */
+    --spotlight-x: -200px;
+    --spotlight-y: -200px;
+    --spotlight-size: 120px;
+
+    -webkit-mask-image: radial-gradient(
+        circle var(--spotlight-size) at
+        var(--spotlight-x) var(--spotlight-y),
+        #000 0%,
+        #000 75%,
+        transparent 100%
+    );
+
+    mask-image: radial-gradient(
+        circle var(--spotlight-size) at
+        var(--spotlight-x) var(--spotlight-y),
+        #000 0%,
+        #000 75%,
+        transparent 100%
+    );
+}
+
+/* Emerald theme colors inside the revealed layer */
+.emerald-reveal,
+.emerald-reveal .hero,
+.emerald-reveal .section {
+    background-color: var(--emerald-bg);
+    color: var(--emerald-text);
+}
+
+.emerald-reveal h1,
+.emerald-reveal h2,
+.emerald-reveal h3 {
+    color: var(--emerald-text);
+}
+
+.emerald-reveal a,
+.emerald-reveal .accent {
+    color: var(--emerald-gold);
+}
+
+.emerald-reveal button,
+.emerald-reveal .btn {
+    background-color: var(--emerald-accent);
+    color: var(--emerald-text);
+    border-color: var(--emerald-gold);
+}
+
+/* Circular cursor outline */
+.spotlight-cursor {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 240px;
+    height: 240px;
+    border: 1px solid rgb(213 184 121 / 75%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+
+    transform: translate(-50%, -50%);
+    box-shadow:
+        0 0 18px rgb(213 184 121 / 12%),
+        inset 0 0 18px rgb(213 184 121 / 5%);
+
+    opacity: 0;
+    transition: opacity 180ms ease;
+}
+
+/* Enable on desktop devices with a mouse */
+@media (hover: hover) and (pointer: fine) {
+    body.spotlight-enabled .spotlight-cursor {
+        opacity: 1;
+    }
+}
+
+/* Do not show custom cursor on touch devices */
+@media (hover: none), (pointer: coarse) {
+    .emerald-reveal,
+    .spotlight-cursor {
+        display: none !important;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .spotlight-cursor {
+        transition: none;
+    }
+}
+
+
+
+/* ==========================================
+   MIDNIGHT EMERALD — COMPLETE DESIGN SYSTEM
+   Alternate palette for cursor spotlight
+========================================== */
+
+:root {
+    /* Backgrounds */
+    --em-bg: #0B1410;
+    --em-bg-alt: #101C15;
+    --em-surface: #14251B;
+    --em-surface-hover: #1B3325;
+    --em-surface-raised: #203A2A;
+
+    /* Brand accents */
+    --em-primary: #244734;
+    --em-primary-hover: #315C40;
+    --em-gold: #D5B879;
+    --em-gold-hover: #E8D09A;
+
+    /* Typography */
+    --em-heading: #F2F0E8;
+    --em-text: #B8C4B5;
+    --em-muted: #829184;
+    --em-text-on-accent: #0B1410;
+
+    /* Borders and effects */
+    --em-border: #304638;
+    --em-border-highlight: #D5B879;
+    --em-shadow: rgb(0 0 0 / 28%);
+    --em-gold-glow: rgb(213 184 121 / 18%);
+
+    /* Forms and status */
+    --em-input-bg: #101A13;
+    --em-input-border: #405646;
+    --em-success: #8BC5A0;
+    --em-focus: #E8D09A;
+
+    /* Cursor */
+    --em-cursor-ring: #D5B879;
+    --em-cursor-glow: rgb(213 184 121 / 16%);
+}
+
+/*
+  These rules apply only to the alternate
+  Emerald layer, not the original website.
+*/
+
+.emerald-reveal {
+    color: var(--em-text);
+    background: var(--em-bg);
+}
+
+.emerald-reveal h1,
+.emerald-reveal h2,
+.emerald-reveal h3,
+.emerald-reveal h4 {
+    color: var(--em-heading);
+}
+
+.emerald-reveal p,
+.emerald-reveal li {
+    color: var(--em-text);
+}
+
+.emerald-reveal a {
+    color: var(--em-gold);
+}
+
+.emerald-reveal a:hover {
+    color: var(--em-gold-hover);
+}
+
+.emerald-reveal .card,
+.emerald-reveal .project-card,
+.emerald-reveal .skill-card,
+.emerald-reveal .contact-card {
+    background: var(--em-surface);
+    border-color: var(--em-border);
+    box-shadow: 0 12px 32px var(--em-shadow);
+}
+
+.emerald-reveal button,
+.emerald-reveal .btn {
+    background: var(--em-primary);
+    color: var(--em-heading);
+    border: 1px solid var(--em-border-highlight);
+}
+
+.emerald-reveal button:hover,
+.emerald-reveal .btn:hover {
+    background: var(--em-primary-hover);
+    color: var(--em-gold-hover);
+}
+
+.emerald-reveal input,
+.emerald-reveal textarea,
+.emerald-reveal select {
+    background: var(--em-input-bg);
+    color: var(--em-heading);
+    border-color: var(--em-input-border);
+}
+
+.emerald-reveal ::selection {
+    background: var(--em-gold);
+    color: var(--em-bg);
+}
+
+/* ===== Functional spotlight layer ===== */
+
+#emerald-spotlight-layer {
+    position: fixed;
+    inset: 0;
+    z-index: 9980;
+    pointer-events: none;
+    overflow: hidden;
+    background: var(--em-bg);
+    clip-path: circle(0px at -300px -300px);
+    color: var(--em-text);
+}
+
+#emerald-spotlight-layer .spotlight-copy {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    background: var(--em-bg);
+    color: var(--em-text);
+}
+
+#emerald-spotlight-layer h1,
+#emerald-spotlight-layer h2,
+#emerald-spotlight-layer h3,
+#emerald-spotlight-layer h4 {
+    color: var(--em-heading) !important;
+}
+
+#emerald-spotlight-layer p,
+#emerald-spotlight-layer li {
+    color: var(--em-text);
+}
+
+#emerald-spotlight-layer a {
+    color: var(--em-gold);
+}
+
+#emerald-spotlight-layer button,
+#emerald-spotlight-layer .btn {
+    background: var(--em-primary);
+    color: var(--em-heading);
+    border-color: var(--em-gold);
+}
+
+#emerald-spotlight-layer .contact-card,
+#emerald-spotlight-layer .project-card,
+#emerald-spotlight-layer .skill-card {
+    background: var(--em-surface);
+    border-color: var(--em-border);
+}
+
+#emerald-spotlight-ring {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 190px;
+    height: 190px;
+    border: 1px solid var(--em-gold);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 9999;
+    box-shadow: 0 0 24px var(--em-gold-glow);
+    display: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    #emerald-spotlight-ring {
+        display: block;
+    }
+}
+
+@media (hover: none), (pointer: coarse) {
+    #emerald-spotlight-layer,
+    #emerald-spotlight-ring {
+        display: none !important;
+    }
+}
+
+/* Midnight Emerald cursor spotlight */
+#emerald-spotlight-layer {
+    position: fixed;
+    inset: 0;
+    z-index: 9990;
+    pointer-events: none;
+    overflow: hidden;
+    clip-path: circle(
+        var(--spotlight-radius, 150px)
+        at var(--spotlight-x, -500px)
+           var(--spotlight-y, -500px)
+    );
+    background: #0B1410;
+    color: #F2F0E8;
+}
+
+#emerald-spotlight-layer a,
+#emerald-spotlight-layer button {
+    cursor: none;
+}
+
+#emerald-spotlight-ring {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 190px;
+    height: 190px;
+    border: 1px solid rgba(213, 184, 121, 0.8);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0;
+    transition: opacity 180ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    body.spotlight-ready #emerald-spotlight-ring {
+        opacity: 1;
+    }
+}
+
+@media (hover: none), (prefers-reduced-motion: reduce) {
+    #emerald-spotlight-ring {
+        display: none;
+    }
+}
+
+/* ==========================================
+   CURSOR SPOTLIGHT — MIDNIGHT EMERALD
+   Original portfolio styles remain untouched
+   ========================================== */
+
+#emerald-spotlight-layer {
+    position: fixed;
+    inset: 0;
+    z-index: 9990;
+    pointer-events: none;
+    overflow: hidden;
+
+    clip-path: circle(
+        var(--spotlight-radius, 150px)
+        at var(--spotlight-x, -500px)
+           var(--spotlight-y, -500px)
+    );
+
+    background: #0B1410;
+    color: #B8C4B5;
+
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 160ms ease;
+}
+
+body.spotlight-ready #emerald-spotlight-layer {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* The duplicate page follows the original page scroll */
+#emerald-spotlight-layer .emerald-spotlight-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    min-height: 100vh;
+    will-change: transform;
+}
+
+/* Midnight Emerald palette */
+#emerald-spotlight-layer,
+#emerald-spotlight-layer main,
+#emerald-spotlight-layer section,
+#emerald-spotlight-layer footer {
+    background-color: #0B1410;
+    color: #B8C4B5;
+}
+
+#emerald-spotlight-layer .site-header {
+    background: rgba(11, 20, 16, 0.96);
+    border-color: #304638;
+}
+
+#emerald-spotlight-layer h1,
+#emerald-spotlight-layer h2,
+#emerald-spotlight-layer h3,
+#emerald-spotlight-layer h4,
+#emerald-spotlight-layer .section-title,
+#emerald-spotlight-layer .hero-title {
+    color: #F2F0E8;
+}
+
+#emerald-spotlight-layer p,
+#emerald-spotlight-layer li,
+#emerald-spotlight-layer .muted {
+    color: #B8C4B5;
+}
+
+#emerald-spotlight-layer a,
+#emerald-spotlight-layer .title-accent,
+#emerald-spotlight-layer .brand-dot,
+#emerald-spotlight-layer .section-label {
+    color: #D5B879;
+}
+
+#emerald-spotlight-layer .education-card,
+#emerald-spotlight-layer .project-card,
+#emerald-spotlight-layer .contact-card,
+#emerald-spotlight-layer .constellation-panel,
+#emerald-spotlight-layer .skill-detail-panel,
+#emerald-spotlight-layer .floating-card,
+#emerald-spotlight-layer .visual-core {
+    background: #14251B;
+    color: #B8C4B5;
+    border-color: #304638;
+}
+
+#emerald-spotlight-layer .btn,
+#emerald-spotlight-layer .nav-cta {
+    background: #244734;
+    color: #F2F0E8;
+    border-color: #315C40;
+}
+
+#emerald-spotlight-layer .btn:hover,
+#emerald-spotlight-layer .nav-cta:hover {
+    background: #315C40;
+}
+
+#emerald-spotlight-layer input,
+#emerald-spotlight-layer textarea,
+#emerald-spotlight-layer select {
+    background: #101A13;
+    color: #F2F0E8;
+    border-color: #304638;
+}
+
+#emerald-spotlight-layer input::placeholder,
+#emerald-spotlight-layer textarea::placeholder {
+    color: #829184;
+}
+
+#emerald-spotlight-layer svg text {
+    fill: #D5B879;
+}
+
+#emerald-spotlight-layer svg line,
+#emerald-spotlight-layer svg path {
+    stroke: #315C40;
+}
+
+/* Keep the duplicated layer purely visual */
+#emerald-spotlight-layer * {
+    pointer-events: none !important;
+    caret-color: transparent !important;
+}
+
+/* Golden circular outline */
+#emerald-spotlight-ring {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 190px;
+    height: 190px;
+    border: 1px solid rgba(213, 184, 121, 0.85);
+    border-radius: 50%;
+    box-shadow:
+        0 0 0 1px rgba(213, 184, 121, 0.08),
+        0 0 24px rgba(213, 184, 121, 0.08);
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0;
+    transition: opacity 180ms ease;
+}
+
+body.spotlight-ready #emerald-spotlight-ring {
+    opacity: 1;
+}
+
+@media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) {
+    #emerald-spotlight-layer,
+    #emerald-spotlight-ring {
+        display: none !important;
+    }
+}
