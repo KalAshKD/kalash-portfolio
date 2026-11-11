@@ -1,3 +1,7 @@
+import os
+import json
+import logging
+import urllib.request
 
 from django.shortcuts import render
 from django.conf import settings
@@ -7,9 +11,33 @@ from django.core.exceptions import ValidationError
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 
+logger = logging.getLogger(__name__)
+
 
 def home(request):
     return render(request, "home/index.html")
+
+
+def send_via_resend(subject, body, reply_to):
+    payload = json.dumps({
+        "from": "Portfolio <onboarding@resend.dev>",
+        "to": [settings.EMAIL_HOST_USER],
+        "reply_to": reply_to,
+        "subject": subject,
+        "text": body,
+    }).encode()
+
+    req = urllib.request.Request(
+        "https://api.resend.com/emails",
+        data=payload,
+        method="POST",
+        headers={
+            "Authorization": f"Bearer {os.environ['RESEND_API_KEY']}",
+            "Content-Type": "application/json",
+            "User-Agent": "kalash-portfolio/1.0",
+        },
+    )
+    urllib.request.urlopen(req, timeout=10)
 
 
 @require_POST
@@ -65,14 +93,17 @@ def send_contact_email(request):
     )
 
     try:
-        email = EmailMessage(
-            subject=subject,
-            body=body,
-            from_email=settings.DEFAULT_FROM_EMAIL,
-            to=[settings.EMAIL_HOST_USER],
-            reply_to=[visitor_email],
-        )
-        email.send(fail_silently=False)
+        if os.environ.get("RESEND_API_KEY"):
+            send_via_resend(subject, body, visitor_email)
+        else:
+            email = EmailMessage(
+                subject=subject,
+                body=body,
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                to=[settings.EMAIL_HOST_USER],
+                reply_to=[visitor_email],
+            )
+            email.send(fail_silently=False)
 
         return JsonResponse({
             "success": True,
@@ -80,6 +111,7 @@ def send_contact_email(request):
         })
 
     except Exception:
+        logger.exception("Contact form email failed")
         return JsonResponse(
             {"error": "Unable to send your message right now. Please try again."},
             status=500
